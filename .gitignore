@@ -1,0 +1,70 @@
+# Go
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+*.out
+
+.DS_Store     # macOS
+
+# Go workspace file
+go.work.sum
+
+# React Native / Node.js
+# Dependencies
+/node_modules
+
+# Metro Bundler cache
+/android/.gradle
+/android/app/build
+/android/build
+/ios/build
+/ios/DerivedData
+/ios/Pods
+/ios/.xcode.env.local
+
+# Android build artifacts
+/android/app/src/main/assets/
+*.apk
+*.ap_
+*.aab
+*.aar
+*.iml
+
+# iOS build artifacts and user-specific files
+/ios/Pods/
+/ios/.symlinks/
+/ios/Carthage/Build/
+/ios/Developer/
+/ios/fastlane/
+/ios/**/*.xcodeproj/project.xcworkspace/
+/ios/**/*.xcodeproj/xcuserdata/
+/ios/**/*.xcworkspace/xcuserdata/
+/ios/**/*.xcassets/
+/ios/main.jsbundle
+/ios/index.ios.bundle
+
+# React Native specific
+*.jsbundle
+.expo/
+web/dist/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Other common files
+npm-debug.log*
+report-*.json
+dist/
+build/
+coverage/
+
