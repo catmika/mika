@@ -8,14 +8,30 @@ const (
 	ProjectTypeBackend  ProjectType = "backend"
 )
 
-// Framework represents the selected framework
+type Language string
+
+const (
+	LanguageJavaScript Language = "javascript"
+	LanguageTypeScript Language = "typescript"
+	LanguageGolang     Language = "golang"
+	LanguagePython     Language = "python"
+	LanguageJava       Language = "java"
+	LanguageCSharp     Language = "csharp"
+	LanguageRuby       Language = "ruby"
+	LanguagePHP        Language = "php"
+	LanguageRust       Language = "rust"
+)
+
 type Framework string
 
 // Frontend frameworks
 const (
-	FrameworkReact   Framework = "react"
-	FrameworkVue     Framework = "vue"
-	FrameworkVanilla Framework = "vanilla"
+	FrameworkReact         Framework = "react"
+	FrameworkNext          Framework = "next"
+	FrameworkTanstackStart Framework = "tanstackStart"
+	FrameworkReactRouter   Framework = "reactRouter"
+	FrameworkVue           Framework = "vue"
+	FrameworkVanilla       Framework = "vanilla"
 )
 
 // Backend frameworks
@@ -25,23 +41,34 @@ const (
 	FrameworkNest    Framework = "nest"
 )
 
-// RenderingMode represents how the app should render (for frontend)
-type RenderingMode string
+type Database string
 
 const (
-	RenderingSPA    RenderingMode = "spa"
-	RenderingSSR    RenderingMode = "ssr"
-	RenderingStatic RenderingMode = "static"
+	DatabasePostgreSQL Database = "postgresql"
+	DatabaseMySQL      Database = "mysql"
+	DatabaseSQLite     Database = "sqlite"
+	DatabaseMongoDB    Database = "mongodb"
+	DatabaseRedis      Database = "redis"
+)
+
+type Bundler string
+
+const (
+	BundlerWebpack Bundler = "webpack"
+	BundlerVite    Bundler = "vite"
+	BundlerESBuild Bundler = "esbuild"
+	BundlerRollup  Bundler = "rollup"
 )
 
 // Addon represents optional tooling
 type Addon string
 
 const (
-	AddonESLint     Addon = "eslint"
-	AddonPrettier   Addon = "prettier"
-	AddonHusky      Addon = "husky"
-	AddonTypeScript Addon = "typescript"
+	AddonESLint   Addon = "eslint"
+	AddonPrettier Addon = "prettier"
+	AddonHusky    Addon = "husky"
+	AddonDocker   Addon = "docker"
+	AddonGit      Addon = "git"
 )
 
 // Config holds all user selections from the prompts
@@ -50,6 +77,5 @@ type Config struct {
 	Name           string
 	Type           ProjectType
 	Framework      Framework
-	Rendering      RenderingMode // only for frontend
 	Addons         []Addon
 }

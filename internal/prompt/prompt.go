@@ -1,31 +1,66 @@
 package prompt
 
 import (
-	"fmt"
-
 	"github.com/charmbracelet/huh"
 )
 
-var (
-	guidanceSwitch bool
-)
-
 func Run() (Config, error) {
-	config := Config{GuidanceSwitch: guidanceSwitch}
+	config := Config{}
 
+	// Group 1: Initial questions
 	initialGroup := huh.NewGroup(
-		huh.NewConfirm().Title("Do you want guidance or prefer to choose stack manually?").Affirmative("Guidance").Negative("Manual").Value(&config.GuidanceSwitch),
+		huh.NewConfirm().
+			Title("Do you want guidance or prefer to choose stack manually?").
+			Affirmative("Guidance").
+			Negative("Manual").
+			Value(&config.GuidanceSwitch),
+
+		huh.NewSelect[ProjectType]().
+			Title("What are you building?").
+			Options(
+				huh.NewOption("Frontend", ProjectTypeFrontend),
+				huh.NewOption("Backend", ProjectTypeBackend),
+			).
+			Value(&config.Type),
 	)
 
-	form := huh.NewForm(initialGroup)
+	// Group 2: Frontend-specific questions
+	frontendGroup := huh.NewGroup(
+		huh.NewSelect[Framework]().
+			Title("Which frontend framework?").
+			Options(toFrameworkOptions(frontendFrameworks)...).
+			Value(&config.Framework),
+	).WithHideFunc(func() bool {
+		return config.Type != ProjectTypeFrontend
+	})
+
+	// Group 3: Backend-specific questions
+	backendGroup := huh.NewGroup(
+		huh.NewSelect[Framework]().
+			Title("Which backend framework?").
+			Options(toFrameworkOptions(backendFrameworks)...).
+			Value(&config.Framework),
+	).WithHideFunc(func() bool {
+		return config.Type != ProjectTypeBackend
+	})
+
+	// Group 4: Addons (shown for both frontend and backend)
+	addonsGroup := huh.NewGroup(
+		huh.NewMultiSelect[Addon]().
+			Title("Additional tools (optional)").
+			Options(toAddonOptions(addons)...).
+			Value(&config.Addons),
+	)
+
+	// Single form with all groups
+	form := huh.NewForm(
+		initialGroup,
+		frontendGroup,
+		backendGroup,
+		addonsGroup,
+	)
 
 	err := form.Run()
-
-	if !config.GuidanceSwitch {
-		fmt.Println("So you are senior now huh?")
-	} else {
-		fmt.Println("We've got ourselves a newbee")
-	}
 
 	return config, err
 }
